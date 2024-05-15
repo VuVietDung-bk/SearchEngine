@@ -28,7 +28,30 @@ public class APIController {
         return new Article(jsonObject);
 	}
 	
-	public static String[] getAllTag() throws Exception {
+	public static String[] getTrendingTags() throws Exception {
+		//startDate và endDate không được nhận giá trị null
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		
+		String urlString = hostAddress + "tags/trending?";
+		urlString += "start=" + startDate.format(formatter) + "&";
+		urlString += "end=" + endDate.format(formatter);
+		
+		//Nhận JSONArray từ local host
+		JSONParser parser = new JSONParser();
+        JSONArray jsonArray = (JSONArray) parser.parse(getJSONString(urlString));
+		
+        List<String> tags = new ArrayList<>();
+        for (Object obj : jsonArray) {
+            JSONObject jsonObj = (JSONObject) obj;
+            String tag = (String) jsonObj.get("name");
+            tags.add(tag);
+            
+        }
+        
+        return tags.toArray(new String[0]);
+	}
+
+		public static String[] getAllTag() throws Exception {
 		String urlString = hostAddress + "tags";
 		
 		//Nhận JSONArray từ local host
