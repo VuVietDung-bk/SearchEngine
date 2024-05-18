@@ -51,7 +51,7 @@ public class APIController {
         return tags.toArray(new String[0]);
 	}
 
-		public static String[] getAllTag() throws Exception {
+	public static String[] getAllTag() throws Exception {
 		String urlString = hostAddress + "tags";
 		
 		//Nhận JSONArray từ local host
